@@ -1,0 +1,12 @@
+{
+    "name":"web_marker",
+    "description":"네이버 웹툰 북마커",
+    "version":"0.1",
+    "permissions":["activeTab","scripting"],
+    "manifest_version":3,
+    
+    "action":{
+        "default_title":"test",
+        "default_popup":"popup.html"
+    }
+}
