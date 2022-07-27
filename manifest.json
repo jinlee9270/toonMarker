@@ -5,12 +5,20 @@
     "permissions":[
         "activeTab",
         "scripting",
-        "storage"
+        "storage",
+        "notifications",
+        "tabs",
+        "tabGroups"
     ],
+    "host_permissions":["https://developer.chrome.com/*"],
+    
     "manifest_version":3,
     
     "action":{
         "default_title":"test",
         "default_popup":"popup.html"
+    },
+    "background":{
+        "service_worker":"background.js"
     }
 }

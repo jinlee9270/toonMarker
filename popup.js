@@ -1,27 +1,34 @@
-document.getElementById('id_Red').onclick = () => {
-    chrome.tabs.query({active: true, currentWindow:true}, (tabs) =>
-    {
-        chrome.scripting.executeScript({
-            target: {tabId: tabs[0].id},
-            function: setBackGroundColorRed
-        });
+const tabs = await chrome.tabs.query({
+    url: [
+        "https://developer.chrome.com/docs/webstore/*",
+        "https://developer.chrome.com/docs/extensions/*",
+    ],
     });
-}
 
-document.getElementById('id_Blue').onclick = () => {
-    chrome.tabs.query({active: true, currentWindow:true}, (tabs) =>
-    {
-        chrome.scripting.executeScript({
-            target: {tabId: tabs[0].id},
-            function: setBackGroundColorBlue
-        });
+const collator = new Intl.Collator();
+tabs.sort((a, b) => collator.compare(a.title, b.title));
+
+const template = document.getElementById("li_template");
+const elements = new Set();
+    for (const tab of tabs) {
+    const element = template.content.firstElementChild.cloneNode(true);
+    const title = tab.title.split("-")[0].trim();
+    const pathname = new URL(tab.url).pathname.slice("/docs".length);
+
+    element.querySelector(".title").textContent = title;
+    element.querySelector(".pathname").textContent = pathname;
+    element.querySelector("a").addEventListener("click", async () => {
+      // need to focus window as well as the active tab
+    await chrome.tabs.update(tab.id, { active: true });
+    await chrome.windows.update(tab.windowId, { focused: true });
     });
-}
 
-function setBackGroundColorRed(){
-    document.body.style.backgroundColor = 'red'
+    elements.add(element);
 }
+    document.querySelector("ul").append(...elements);
 
-function setBackGroundColorBlue(){
-    document.body.style.backgroundColor = 'blue'
-}
+    const button = document.querySelector("button");
+    button.addEventListener("click", async () => {
+    const group = await chrome.tabs.group({ tabIds: tabs.map(({ id }) => id) });
+    await chrome.tabGroups.update(group, { title: "DOCS" });
+});
