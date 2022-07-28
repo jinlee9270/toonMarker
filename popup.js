@@ -17,9 +17,9 @@ function addList(){
         if (titles.includes(title)) {
             let options = {
                 type: "basic",
-                title: "이미 있는 제목입니다.",
-                message: '/images/8080.webp',
-                iconUrl: ''
+                title: "already noted",
+                message: '',
+                iconUrl: '/images/8080.webp'
             }
             chrome.notifications.create(options)
         }
