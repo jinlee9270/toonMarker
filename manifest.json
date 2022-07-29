@@ -6,7 +6,7 @@
     "background": {
         "service_worker": "background.js"
     },
-    "permissions": ["storage", "activeTab", "scripting", "notifications"],
+    "permissions": ["storage", "activeTab", "scripting", "notifications", "tabs"],
     "action":{
         "default_popup":"popup.html",
         "default_icon": {
@@ -23,9 +23,8 @@
         "128": "/images/get_started128.png"
     },
     "content_scripts": [{
-        "matches": ["https://comic.naver.com/webtoon/weekday"],
-        "run_at": "document_start",
-        "css": ["mystyles.css"],
-        "js": ["inject.js"]
+        "matches": ["*://*/*"],
+        "all_frames": true,
+        "js": ["content_scripts.js"]
     }]
 }

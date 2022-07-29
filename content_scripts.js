@@ -1,1 +1,2 @@
-document.body.style.backgroundColor = 'orange';
+let bodyText = document.querySelector("body").innerText
+console.log(bodyText)

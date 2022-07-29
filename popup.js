@@ -17,8 +17,8 @@ function addList(){
         if (titles.includes(title)) {
             let options = {
                 type: "basic",
-                title: "already noted",
-                message: '',
+                title: '이미 있는 제목',
+                message: title,
                 iconUrl: '/images/8080.webp'
             }
             chrome.notifications.create(options)
@@ -37,3 +37,12 @@ function addList(){
         })
     }
 }
+
+chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+    let tab = tabs[0].url
+    chrome.scripting.executeScript({
+        target: {tabId: tab},
+        file: 'content_scripts.js'
+    })
+});
+
