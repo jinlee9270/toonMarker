@@ -6,3 +6,6 @@ for (let i = 0; i < arr.length ;i++){
         arr[i].style.filter = 'grayscale(100%)'
     }
 }
+
+// 스크립트 통신 테스트
+chrome.runtime.sendMessage('hello')
