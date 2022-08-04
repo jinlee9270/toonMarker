@@ -6,7 +6,7 @@
     "background": {
         "service_worker": "background.js"
     },
-    "permissions": ["storage", "activeTab", "scripting", "notifications", "tabs", "unlimitedStorage"],
+    "permissions": ["storage", "activeTab", "scripting", "notifications", "tabs", "unlimitedStorage", "contextMenus"],
     "action":{
         "default_popup":"popup.html",
         "default_icon": {
@@ -27,6 +27,6 @@
                     "https://novel.naver.com/*",
                     "https://series.naver.com/*" ],
         "all_frames": true,
-        "js": ["content_scripts.js"]
+        "js": ["content.js"]
     }]
 }

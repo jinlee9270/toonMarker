@@ -7,5 +7,5 @@ for (let i = 0; i < arr.length ;i++){
     }
 }
 
-// 스크립트 통신 테스트
-chrome.runtime.sendMessage('hello')
+// background color 변경 확인
+// document.body.style.backgroundColor = 'red'
