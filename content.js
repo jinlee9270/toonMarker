@@ -7,5 +7,6 @@ for (let i = 0; i < arr.length ;i++){
     }
 }
 
-// background color 변경 확인
-// document.body.style.backgroundColor = 'red'
+chrome.runtime.sendMessage({greeting: 'hello'}, function(response){
+    console.log(response.farewell)
+}) 
