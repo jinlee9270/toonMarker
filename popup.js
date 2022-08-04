@@ -24,31 +24,24 @@ function addList() {
     console.log('addList')
 
     chrome.storage.local.get(null, function(titles) {
-        let flag = false
         let keys = Object.keys(titles)
         console.log('get', keys)
-        for (let i = 0 ;i < keys.length; i++) {
-        
-            if (title === keys[i]) {
-                console.log('1')
 
-                let options = {
-                    type: "basic",
-                    title: '이미 있는 제목',
-                    message: title,
-                    iconUrl: '/images/8080.webp'
-                }
-                
-                flag = true
-                chrome.notifications.create(options)
+        if (keys.includes(title)) {
+            console.log(preview)
+            let options = {
+                type: "basic",
+                title: '이미 있는 제목',
+                message: title,
+                iconUrl: '/images/8080.webp',
             }
+            chrome.notifications.create(options)
         }
-
-        if (!flag) {
+        else {
             chrome.storage.local.set({[title]:title})
-            console.log('!flag', keys)
             ul.innerText = ""
             keys.push(title)
+
             keys.forEach((toon) => {
                 const item = document.createElement('li')
                 item.innerText = toon
