@@ -7,6 +7,6 @@ for (let i = 0; i < arr.length ;i++){
     }
 }
 
-chrome.runtime.sendMessage({greeting: 'hello'}, function(response){
-    console.log(response.farewell)
-}) 
+// chrome.runtime.sendMessage({greeting: 'hello'}, function(response){
+//     console.log(response.farewell)
+// }) 
