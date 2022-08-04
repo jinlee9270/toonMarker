@@ -21,11 +21,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function addList() {
     const title = document.getElementById("inputText").value
+    console.log('addList')
 
     chrome.storage.local.get(null, function(titles) {
         let flag = false
-        const keys = Object.keys(titles)
-    
+        let keys = Object.keys(titles)
+        console.log('get', keys)
         for (let i = 0 ;i < keys.length; i++) {
         
             if (title === keys[i]) {
@@ -45,29 +46,14 @@ function addList() {
 
         if (!flag) {
             chrome.storage.local.set({[title]:title})
+            console.log('!flag', keys)
+            ul.innerText = ""
+            keys.push(title)
+            keys.forEach((toon) => {
+                const item = document.createElement('li')
+                item.innerText = toon
+                ul.appendChild(item)
+            })
         }
     })
-
-        // if (titles.includes(title)) {
-        //     let options = {
-        //         type: "basic",
-        //         title: '이미 있는 제목',
-        //         message: title,
-        //         iconUrl: '/images/8080.webp'
-        //     }
-        //     chrome.notifications.create(options)
-        // }
-        // else {
-        //     titles.push(title)
-            // ul.innerText = ""
-            
-            // titles.forEach((toon) => {
-            //     const item = document.createElement('li')
-            //     item.innerText = toon
-            //     ul.appendChild(item)
-            // })
-        // }
 }
-
-
-
