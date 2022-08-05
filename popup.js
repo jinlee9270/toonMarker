@@ -26,6 +26,7 @@ function addList() {
                 iconUrl: '/images/8080.webp',
             }
             chrome.notifications.create(options)
+            inputClear()
         }
         else if(title == ''){
             let nodata = {
@@ -40,12 +41,16 @@ function addList() {
             chrome.storage.local.set({[title]:title})
             ul.innerText = ""
             keys.push(title)
-
+            
             keys.forEach((toon) => {
                 const item = document.createElement('li')
                 item.innerText = toon
                 ul.appendChild(item)
             })
+            inputClear()
+            chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
+                chrome.tabs.reload(arrayOfTabs[0].id);
+            });
         }
     })
 }
@@ -61,4 +66,8 @@ window.onload = function(){
             ul.appendChild(item)
         })
     })
+}
+
+function inputClear(){
+    document.getElementById("inputText").value = ""
 }
