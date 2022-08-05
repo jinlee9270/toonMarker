@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
 function addList() {
     const title = document.getElementById("inputText").value
-    console.log('addList')
+    // console.log('addList')
 
     chrome.storage.local.get(null, function(titles) {
         let keys = Object.keys(titles)
-        console.log('get', keys)
+        // console.log('get', keys)
 
         if (keys.includes(title)) {
             let options = {
@@ -42,11 +42,7 @@ function addList() {
             ul.innerText = ""
             keys.push(title)
             
-            keys.forEach((toon) => {
-                const item = document.createElement('li')
-                item.innerText = toon
-                ul.appendChild(item)
-            })
+            onInit()
             inputClear()
             chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
                 chrome.tabs.reload(arrayOfTabs[0].id);
@@ -57,13 +53,31 @@ function addList() {
 
 window.onload = function(){
     ul.innerText = ""
+    onInit()
+}
 
+function onInit(){
     chrome.storage.local.get(null, function(titles){
         let keys = Object.keys(titles)
+        // console.log("keys",keys)
+
+        const itembox = document.getElementById('ul')
+        // console.log("itembox",itembox)
         keys.forEach((toon) => {
-            const item = document.createElement('li')
-            item.innerText = toon
-            ul.appendChild(item)
+            const item = document.createElement('div')
+            const itemTitle = document.createElement('div')
+            itemTitle.innerText = toon
+            
+            const editBtn = document.createElement('button')
+            editBtn.innerText = "edit"
+    
+            const deleteBtn = document.createElement('button')
+            deleteBtn.innerText = "delete"
+    
+            item.appendChild(itemTitle)
+            item.appendChild(editBtn)
+            item.appendChild(deleteBtn)
+            itembox.appendChild(item)
         })
     })
 }
@@ -71,3 +85,4 @@ window.onload = function(){
 function inputClear(){
     document.getElementById("inputText").value = ""
 }
+
