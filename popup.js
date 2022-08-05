@@ -19,14 +19,22 @@ function addList() {
         console.log('get', keys)
 
         if (keys.includes(title)) {
-            console.log(preview)
             let options = {
                 type: "basic",
-                title: '이미 있는 제목',
+                title: "already in",
                 message: title,
                 iconUrl: '/images/8080.webp',
             }
             chrome.notifications.create(options)
+        }
+        else if(title == ''){
+            let nodata = {
+                type: "basic",
+                title: "no title",
+                message: "input title please",
+                iconUrl: '/images/8080.webp',
+            }
+            chrome.notifications.create(nodata)
         }
         else {
             chrome.storage.local.set({[title]:title})
@@ -44,7 +52,7 @@ function addList() {
 
 window.onload = function(){
     ul.innerText = ""
-    
+
     chrome.storage.local.get(null, function(titles){
         let keys = Object.keys(titles)
         keys.forEach((toon) => {
