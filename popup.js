@@ -1,12 +1,3 @@
-// tabId 부분 에러
-// chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
-//     let tab = tabs[0].url
-//     chrome.scripting.executeScript({
-//         target: {tabId: tab},
-//         file: 'content_scripts.js'
-//     })
-// });
-
 document.addEventListener('DOMContentLoaded', function(){
     let btn = document.getElementById("btn")
     let inputText = document.getElementById("inputText")
@@ -48,5 +39,18 @@ function addList() {
                 ul.appendChild(item)
             })
         }
+    })
+}
+
+window.onload = function(){
+    ul.innerText = ""
+    
+    chrome.storage.local.get(null, function(titles){
+        let keys = Object.keys(titles)
+        keys.forEach((toon) => {
+            const item = document.createElement('li')
+            item.innerText = toon
+            ul.appendChild(item)
+        })
     })
 }
