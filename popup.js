@@ -65,13 +65,24 @@ function onInit(){
         // console.log("itembox",itembox)
         keys.forEach((toon) => {
             const item = document.createElement('div')
+            item.setAttribute('class', 'item')
             const itemTitle = document.createElement('div')
             itemTitle.innerText = toon
             
             const editBtn = document.createElement('button')
+            editBtn.setAttribute('class', 'editBtn')
+            editBtn.onclick = function(){
+                
+            }
             editBtn.innerText = "edit"
-    
+            
             const deleteBtn = document.createElement('button')
+            deleteBtn.setAttribute('class', 'deleteBtn')
+            deleteBtn.onclick = function(){
+                // console.log(toon)
+                chrome.storage.local.remove(toon)
+                // 바뀐 리스트들에 대한 재 랜더링하기    
+            }
             deleteBtn.innerText = "delete"
     
             item.appendChild(itemTitle)
