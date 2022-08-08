@@ -83,14 +83,17 @@ function onInit(){
             deleteBtn.innerText = "delete"
             
             const editBox = document.createElement('div')
+            editBox.setAttribute('class', "editBox")
             editBox.setAttribute('id', toon+'edit')
             
             const editInput = document.createElement('input')
+            editInput.setAttribute('id', toon+'editInput')
             editInput.value = toon
 
-            const editSave = document.createElement('button')
-            editSave.innerText = 'edit save'
-            editSave.setAttribute('onclick', saveEdit)
+            const editSaveBtn = document.createElement('button')
+            editSaveBtn.innerText = 'edit save'
+            // editSaveBtn.setAttribute('onclick', saveEdit)
+            // editSaveBtn.onclick = () => {saveEdit(toon)}
             
             item.appendChild(itemTitle)
             item.appendChild(editBtn)
@@ -98,7 +101,7 @@ function onInit(){
             itembox.appendChild(item)
 
             editBox.appendChild(editInput)
-            editBox.appendChild(editSave)
+            editBox.appendChild(editSaveBtn)
             itembox.appendChild(editBox)
             
             document.getElementById(toon+'edit').style.display = 'none'
@@ -111,7 +114,7 @@ function inputClear(){
 }
 
 function showEdit(toon){
-    // console.log(toon)
+    console.log(toon, document.getElementById(toon).style)
     if (document.getElementById(toon).style.display === "block"){
         document.getElementById(toon).style.display = "none"
     }
@@ -120,6 +123,11 @@ function showEdit(toon){
     }
 }
 
-function saveEdit() {
-    // 기존 key값을 현재 key 값으로 바꾸고 value도 현재 value로 바꾼다
-}
+// function saveEdit(target) {
+//     // 기존 key값을 현재 key 값으로 바꾸고 value도 현재 value로 바꾼다
+//     chrome.storage.local.get(target, function(target){
+//         // chrome.storage.local.remove(target)
+//         const newTitle = document.getElementById(target+"editInput").value
+//         chrome.storage.local.set({[newTitle]:newTitle})
+//     })
+// }
