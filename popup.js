@@ -92,8 +92,8 @@ function onInit(){
 
             const editSaveBtn = document.createElement('button')
             editSaveBtn.innerText = 'edit save'
-            // editSaveBtn.setAttribute('onclick', saveEdit)
-            // editSaveBtn.onclick = () => {saveEdit(toon)}
+            editSaveBtn.setAttribute('onclick', saveEdit)
+            editSaveBtn.onclick = () => {saveEdit(toon)}
             
             item.appendChild(itemTitle)
             item.appendChild(editBtn)
@@ -114,7 +114,7 @@ function inputClear(){
 }
 
 function showEdit(toon){
-    console.log(toon, document.getElementById(toon).style)
+    // console.log(toon, document.getElementById(toon).style)
     if (document.getElementById(toon).style.display === "block"){
         document.getElementById(toon).style.display = "none"
     }
@@ -123,11 +123,13 @@ function showEdit(toon){
     }
 }
 
-// function saveEdit(target) {
-//     // 기존 key값을 현재 key 값으로 바꾸고 value도 현재 value로 바꾼다
-//     chrome.storage.local.get(target, function(target){
-//         // chrome.storage.local.remove(target)
-//         const newTitle = document.getElementById(target+"editInput").value
-//         chrome.storage.local.set({[newTitle]:newTitle})
-//     })
-// }
+function saveEdit(target) {
+    chrome.storage.local.get(target, function(){
+        const newTitle = document.getElementById(target+'editInput').value
+        console.log(target,newTitle)
+        chrome.storage.local.set({[newTitle]:newTitle})
+        document.getElementById(target+'edit').style.display = 'none'
+        chrome.storage.local.remove(target)
+    })
+    
+}
