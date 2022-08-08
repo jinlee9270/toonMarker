@@ -70,19 +70,15 @@ function onInit(){
             itemTitle.innerText = toon
             
             const editBtn = document.createElement('button')
-            editBtn.setAttribute('class', 'editBtn')
-            editBtn.onclick = function(){
-                //toon을 key로 value를 담아서 input box를 연다
-                //해당 input box에 
-            }
+            editBtn.setAttribute('id', toon+'editBtn')
+            editBtn.onclick = () => {showEdit(toon+'edit')}
             editBtn.innerText = "edit"
 
             const deleteBtn = document.createElement('button')
             deleteBtn.setAttribute('class', 'deleteBtn')
             deleteBtn.onclick = function(){
-                // console.log(toon)
                 chrome.storage.local.remove(toon)
-                // 바뀐 리스트들에 대한 재 랜더링하기    
+                //재 린더링 해야 하는데
             }
             deleteBtn.innerText = "delete"
             
@@ -91,9 +87,11 @@ function onInit(){
             
             const editInput = document.createElement('input')
             editInput.value = toon
+
             const editSave = document.createElement('button')
             editSave.innerText = 'edit save'
-
+            editSave.setAttribute('onclick', saveEdit)
+            
             item.appendChild(itemTitle)
             item.appendChild(editBtn)
             item.appendChild(deleteBtn)
@@ -102,6 +100,7 @@ function onInit(){
             editBox.appendChild(editInput)
             editBox.appendChild(editSave)
             itembox.appendChild(editBox)
+            
             document.getElementById(toon+'edit').style.display = 'none'
         })
     })
@@ -111,3 +110,16 @@ function inputClear(){
     document.getElementById("inputText").value = ""
 }
 
+function showEdit(toon){
+    // console.log(toon)
+    if (document.getElementById(toon).style.display === "block"){
+        document.getElementById(toon).style.display = "none"
+    }
+    else{
+        document.getElementById(toon).style.display = "block"
+    }
+}
+
+function saveEdit() {
+    // 기존 key값을 현재 key 값으로 바꾸고 value도 현재 value로 바꾼다
+}
