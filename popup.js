@@ -44,9 +44,7 @@ function addList() {
             
             onInit()
             inputClear()
-            chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
-                chrome.tabs.reload(arrayOfTabs[0].id);
-            });
+            pageReload()
         }
     })
 }
@@ -63,6 +61,7 @@ function onInit(){
 
         const itembox = document.getElementById('ul')
         // console.log("itembox",itembox)
+
         keys.forEach((toon) => {
             const item = document.createElement('div')
             item.setAttribute('class', 'item')
@@ -76,10 +75,7 @@ function onInit(){
 
             const deleteBtn = document.createElement('button')
             deleteBtn.setAttribute('class', 'deleteBtn')
-            deleteBtn.onclick = function(){
-                chrome.storage.local.remove(toon)
-                //재 린더링 해야 하는데
-            }
+            deleteBtn.onclick = () => {deleteTitle(toon)}
             deleteBtn.innerText = "delete"
             
             const editBox = document.createElement('div')
@@ -92,9 +88,13 @@ function onInit(){
 
             const editSaveBtn = document.createElement('button')
             editSaveBtn.innerText = 'edit save'
-            editSaveBtn.setAttribute('onclick', saveEdit)
             editSaveBtn.onclick = () => {saveEdit(toon)}
-            
+            editInput.addEventListener("keyup", function(e) {
+                if (e.key == 'Enter'){
+                    saveEdit(toon)
+                }
+            })
+
             item.appendChild(itemTitle)
             item.appendChild(editBtn)
             item.appendChild(deleteBtn)
@@ -114,7 +114,7 @@ function inputClear(){
 }
 
 function showEdit(toon){
-    // console.log(toon, document.getElementById(toon).style)
+    console.log("showEdit",toon, document.getElementById(toon).style)
     if (document.getElementById(toon).style.display === "block"){
         document.getElementById(toon).style.display = "none"
     }
@@ -123,13 +123,28 @@ function showEdit(toon){
     }
 }
 
+function deleteTitle(target){
+    chrome.storage.local.remove(target)
+    pageReload()
+}
+
 function saveEdit(target) {
+    console.log("saveEdit", target)
     chrome.storage.local.get(target, function(){
         const newTitle = document.getElementById(target+'editInput').value
         console.log(target,newTitle)
-        chrome.storage.local.set({[newTitle]:newTitle})
+        if (target !== newTitle){
+            chrome.storage.local.set({[newTitle]:newTitle})
+            chrome.storage.local.remove(target)
+        }
         document.getElementById(target+'edit').style.display = 'none'
-        chrome.storage.local.remove(target)
+        
     })
-    
+    pageReload()
+}
+
+function pageReload(){
+    chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
+        chrome.tabs.reload(arrayOfTabs[0].id);
+    });
 }
