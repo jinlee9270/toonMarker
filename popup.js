@@ -125,6 +125,7 @@ function showEdit(toon){
 
 function deleteTitle(target){
     chrome.storage.local.remove(target)
+    window.location.reload()
     pageReload()
 }
 
