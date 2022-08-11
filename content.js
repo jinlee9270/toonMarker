@@ -13,12 +13,6 @@ chrome.storage.local.get(null, function(items){
     }
 })
 
-// for (let i = 0; i < arr.length ;i++){
-//     if(mylist.includes(arr[i])){
-//         arr[i].style.filter = 'grayscale(100%)'
-//     }
-// }
-
 // chrome.runtime.sendMessage({greeting: 'hello'}, function(response){
 //     console.log(response.farewell)
 // }) 
