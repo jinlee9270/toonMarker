@@ -141,6 +141,7 @@ function saveEdit(target) {
         document.getElementById(target+'edit').style.display = 'none'
         
     })
+    window.location.reload()
     pageReload()
 }
 
