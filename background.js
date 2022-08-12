@@ -1,6 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
-    //logging the console
-    console.log("This is coming from the background script!")
+    chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
+        console.log(arrayOfTabs[0].id)
+    })
 })
 
 //receiving a message

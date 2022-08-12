@@ -147,6 +147,6 @@ function saveEdit(target) {
 
 function pageReload(){
     chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
-        chrome.tabs.reload(arrayOfTabs[0].id);
-    });
+        chrome.tabs.reload(arrayOfTabs[0].id)
+    })
 }

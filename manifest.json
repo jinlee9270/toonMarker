@@ -26,6 +26,7 @@
         "matches": [
             "https://comic.naver.com/index",
             "https://comic.naver.com/webtoon/weekday*",
+            "https://comic.naver.com/webtoon/weekdayList*",
             "https://comic.naver.com/webtoon/genre*",
             "https://comic.naver.com/webtoon/creation*",
             "https://comic.naver.com/webtoon/artist*",
