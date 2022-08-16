@@ -12,6 +12,14 @@ chrome.runtime.onMessage.addListener(
         currentWindow: true
     }, function(tabs) {
         let tabURL = tabs[0].url;
-        console.log("tabURL",tabURL);
+        console.log("tabURL1",tabURL, tabs);
     });
 })
+
+chrome.tabs.query({
+    active: true,
+    currentWindow: true
+}, function(tabs) {
+    let tabURL = tabs[0].url;
+    console.log("tabURL2",tabURL, tabs);
+});
