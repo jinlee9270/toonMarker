@@ -13,6 +13,7 @@ chrome.storage.local.get(null, function(items){
     }
 })
 
-// chrome.runtime.sendMessage({greeting: 'hello'}, function(response){
-//     console.log(response.farewell)
-// }) 
+chrome.runtime.sendMessage({greeting: 'backgroundhello'}, (response) => {
+    console.log("[contentscript] chrome.runtime.sendMessage()");
+    console.log(response.farewell);
+});
