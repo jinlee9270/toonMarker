@@ -24,15 +24,7 @@
     },
     "content_scripts": [{
         "matches": [
-            "https://comic.naver.com/index",
-            "https://comic.naver.com/webtoon/weekday*",
-            "https://comic.naver.com/webtoon/weekdayList*",
-            "https://comic.naver.com/webtoon/genre*",
-            "https://comic.naver.com/webtoon/creation*",
-            "https://comic.naver.com/webtoon/artist*",
-            "https://comic.naver.com/webtoon/period*",
-            "https://comic.naver.com/webtoon/theme*",
-            "https://comic.naver.com/webtoon/finish*"
+            "https://comic.naver.com/*"
         ],
         "all_frames": true,
         "js": ["content.js"]
