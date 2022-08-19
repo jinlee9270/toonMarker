@@ -8,17 +8,12 @@ for (let i = 0; i < arr.length; i++){
     let id = temp[5]
     if (id !== undefined && id.length === 6){
         if (!database.find(obj => obj.id === id)) {
-            database.push({"id":id, "title":title, "preWatch":[]})
+            database.push({"id":id, "title":title, "preWatch":[1,2,3]})
             // console.log("database",database)
         }
     }
     chrome.storage.local.set({["database"]:database})
 }
-
-// chrome.storage.local.get(null,(database) => {
-//     console.log("database", database)
-// })
-
 
 chrome.storage.local.get(null, (items) => {
     Object.entries(database).forEach((element) => {
@@ -29,7 +24,7 @@ chrome.storage.local.get(null, (items) => {
             for(let i = 0;i < arr.length;i++){
                 let title = arr[i].alt
                 if (title === element[1].title){
-                    console.log(title, element[1].title)
+                    // console.log(title, element[1].title)
                     arr[i].style.filter = "grayscale(100%)"
                 }
             }
