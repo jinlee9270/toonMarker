@@ -16,10 +16,12 @@ const onInit = () => {
                     item.setAttribute('class', 'item')
 
                     const title = document.createElement('div')
+                    title.setAttribute('class', 'title')
                     title.innerText = el[1].title
 
                     const subBtn = document.createElement('button')
-                    subBtn.innertext = "안봄"
+                    subBtn.setAttribute('class', 'subBtn')
+                    subBtn.innerText = "not subscribe"
                     subBtn.onclick = () => { deleteSub(el[1].id) }
 
                     item.appendChild(title)

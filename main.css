@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    width: 250px
 }
 .flexbox {
     display: flex;
@@ -9,4 +10,12 @@ body {
 
 .item {
     display: flex;
+}
+
+.title {
+    padding: 8px
+}
+
+.subBtn {
+    margin: 8px
 }

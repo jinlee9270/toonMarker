@@ -32,3 +32,9 @@ chrome.storage.local.get(null, (items) => {
     })
 })
 
+chrome.runtime.sendMessage({cmd: "fromcontentscript"}, (response) => {
+    console.log("fromcontentscript");
+    if (response.frompopup) {
+        console.log(response.frompopup);
+    }
+});

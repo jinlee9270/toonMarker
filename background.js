@@ -1,19 +1,18 @@
 chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => {
-    console.log('[background] chrome.runtime.onMessage.addListener()')
-
-    if (request.greeting === 'backgroundhello') {
-        console.log("[background] request:" + request.greeting)
-        // TODO
-        sendResponse({ farewell: 'contentgoodbye' })
+    console.log("request",request)
+    if (request.cmd == "fromcontentscript"){
+        sendResponse({frompopup: "popup       contetn script   "})
+        chrome.tabs.query(
+            {active: true, currentWindow: true},
+            (tabs) => {
+            const tabURL = tabs[0].url
+            // const id = tabURL.split('/')
+            // const num = tabURL.searchParams.get('no')
+            // console.log(tabURL, id, num)
+        })
     }
-    chrome.tabs.query({
-        active: true,
-        currentWindow: true
-    }, function(tabs) {
-        let tabURL = tabs[0].url
-        console.log("tabURL1",tabURL, tabs)
-    });
+    else {
+        sendResponse({frompopup: "    "})
+    }
 })
-
-
