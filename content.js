@@ -23,7 +23,7 @@ const subItems = () => {
         }
         // case2. local storage에 data가 있는 경우
         else {
-
+            console.log("두번째")
         }
     })
     
@@ -58,9 +58,7 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
     const no = url.searchParams.get('no')
 
     if (titleId && no){
-        chrome.storage.local.get(null, (item) => {
-            console.log("item",item)
-        })
+        addPreWatch(titleId, no)
         // localstoarge에서 titleId 와 일치하는 것을 찾아서 no를 preWatch에 요소로 추가한다
     }
 
@@ -69,4 +67,17 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
         subItems()
     }
 })
+
+function addPreWatch (titleId, no){
+    chrome.storage.local.get(null, (item) => {
+        Object.entries(item).forEach((element) => {
+            Object.entries(element[1]).forEach((el) => {
+                if (el[1].id === titleId) {
+                    el[1].preWatch.push(no)
+                    console.log(el)
+                }
+            })
+        })
+    })
+}
 
