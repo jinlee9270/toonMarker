@@ -1,6 +1,7 @@
-const dataset = () => {
-    let bodyText = document.querySelectorAll('li div a img')
-    let arr = Array.from(bodyText)
+let bodyText = document.querySelectorAll('li div a img')
+let arr = Array.from(bodyText)
+
+const subItems = () => {
     // console.log("content",arr)
     let database = []
     for (let i = 0; i < arr.length; i++){
@@ -17,21 +18,21 @@ const dataset = () => {
     }
 }
 
-chrome.storage.local.get(null, (items) => {
-    // console.log("items",items)
-    Object.entries(database).forEach((element) => {
-        // console.log(element)
+chrome.storage.local.get(null, (item) => {
+    Object.entries(item).forEach((element) => {
+        Object.entries(element[1]).forEach((el) => {
         // console.log(element[1].preWatch, element[1].title)
-        if (element[1].preWatch.length === 0){
-            // console.log(element[1].title)
-            for(let i = 0;i < arr.length;i++){
-                let title = arr[i].alt
-                if (title === element[1].title){
-                    // console.log(title, element[1].title)
-                    arr[i].style.filter = "grayscale(100%)"
+            if (el[1].preWatch.length === 0){
+                // console.log(el[1].title)
+                for(let i = 0;i < arr.length;i++){
+                    let title = arr[i].alt
+                    if (title === el[1].title){
+                        // console.log(title, el[1].title)
+                        arr[i].style.filter = "grayscale(100%)"
+                    }
                 }
             }
-        }
+        })
     })
 })
 
@@ -49,8 +50,9 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
         // titleId 와 일치하는 것을 찾아서 no를 preWatch에 요소로 추가한다
     }
 
-    if (url === "https://comic.naver.com/webtoon/weekday"){
+    if (url.href == "https://comic.naver.com/webtoon/weekday"){
         console.log("home")
+        subItems()
     }
 })
 

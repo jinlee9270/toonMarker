@@ -4,11 +4,11 @@ function pageReload(){
     })
 }
 
-const onInit = () => {
+function onInit () {
     const sidebar = document.getElementById('sublist')
-    chrome.storage.local.get(null, (items) => {
-        Object.entries(items).forEach((element) => {
-            // console.log("element", element[1])
+    chrome.storage.local.get(null, () => {
+        Object.entries(database).forEach((element) => {
+            console.log("element", element[1])
             Object.entries(element[1]).forEach((el) => {
                 // console.log(el[1].preWatch.length)
                 const item = document.createElement('div')
