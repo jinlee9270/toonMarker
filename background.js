@@ -6,8 +6,4 @@ chrome.runtime.onMessage.addListener(
         // console.log(sender)
         sendResponse({frompopup: sender.url})
     }
-    else {
-        sendResponse({frompopup: "    "})
-    }
 })
-
