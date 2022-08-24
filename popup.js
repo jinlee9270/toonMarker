@@ -6,30 +6,29 @@ function pageReload(){
 
 function onInit () {
     const sidebar = document.getElementById('sublist')
-    chrome.storage.local.get(null, () => {
-        Object.entries(database).forEach((element) => {
-            console.log("element", element[1])
-            Object.entries(element[1]).forEach((el) => {
-                // console.log(el[1].preWatch.length)
-                const item = document.createElement('div')
-                if (el[1].preWatch.length > 0){
-                    item.setAttribute('class', 'item')
+    chrome.storage.local.get(null, (items) => {
+        Object.entries(items).forEach((item) => {
+            const itemBox = document.createElement('div')
+            console.log("item",item[1].title, item[1].preWatch)
 
-                    const title = document.createElement('div')
-                    title.setAttribute('class', 'title')
-                    title.innerText = el[1].title
+            if (item[1].preWatch.length > 0){
+                console.log(item[1].title)
+                itemBox.setAttribute('class', 'item')
 
-                    const subBtn = document.createElement('button')
-                    subBtn.setAttribute('class', 'subBtn')
-                    subBtn.innerText = "not subscribe"
-                    subBtn.onclick = () => { deleteSub(el[1].id) }
+                const title = document.createElement('div')
+                title.setAttribute('class', 'title')
+                title.innerText = item[1].title
 
-                    item.appendChild(title)
-                    item.appendChild(subBtn)
+                const subBtn = document.createElement('button')
+                subBtn.setAttribute('class', 'subBtn')
+                subBtn.innerText = "not subscribe"
+                subBtn.onclick = () => { deleteSub(item[1].id) }
 
-                    sidebar.appendChild(item)
-                }
-                })
+                itemBox.appendChild(title)
+                itemBox.appendChild(subBtn)
+
+                sidebar.appendChild(itemBox)
+            }
         })
     })
 }
