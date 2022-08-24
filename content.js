@@ -2,32 +2,24 @@ const subItems = () => {
     let bodyText = document.querySelectorAll('li div a img')
     let arr = Array.from(bodyText)
     // console.log("content",arr)
-    let database = []
     
-    chrome.storage.local.get(null,(item) => {
-        // case1. local storage에 data가 없는 경우
-        //local storage에 data가 없는 경우는 그냥 만들면 됨
-        if (item === null){
-            for (let i = 0; i < arr.length; i++){
-                let title = arr[i].alt
-                const temp = arr[i].currentSrc.split("/")
-                let id = temp[5]
-                if (id !== undefined && id.length === 6){
-                    if (!database.find(obj => obj.id === id)) {
-                        database.push({"id":id, "title":title, "preWatch":[]})
-                        // console.log("database",database)
-                    }
+    for (let i = 0; i < arr.length; i++){
+        let title = arr[i].alt
+        const temp = arr[i].currentSrc.split("/")
+        let id = temp[5]
+        
+        if (id !== undefined && id.length === 6){
+            chrome.storage.local.get(id, (item) => {
+                if (JSON.stringify(item) === '{}') {
+                    chrome.storage.local.set({[id]:{"id":id, "title":title, "preWatch":[]}})
+                    // chrome.storage.local.get(id,(item)=>{console.log("from local storage",item)})
                 }
-                chrome.storage.local.set({["database"]:database})
-            }
+                else{
+                    console.log("already in")
+                }
+            })
         }
-        // case2. local storage에 data가 있는 경우
-        else {
-            console.log("두번째")
-        }
-    })
-    
-    
+    }
 }
 
 chrome.storage.local.get(null, (item) => {
@@ -63,7 +55,7 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
     }
 
     if (url.href == "https://comic.naver.com/webtoon/weekday"){
-        console.log("home")
+        // console.log("home")
         subItems()
     }
 })
