@@ -104,7 +104,7 @@ function isWatched(id) {
                 const num = tempUrl.searchParams.get('no')
                 // console.log(tempUrl, num)
                 if (compare1.includes(num)) {
-                    pageNode.style.background="red"
+                    temp.style.background="#F1EFDC"
                 }
             })
         })  
