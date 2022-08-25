@@ -36,8 +36,12 @@ function onInit () {
 onInit()
 
 function deleteSub(id, title){
-    console.log(id)
+    // console.log(id)
     chrome.storage.local.get(id, () => {
         chrome.storage.local.set({[id]:{"id":id, "title":title, "preWatch":[]}})
+    
+        pageReload()
+        document.getElementById('sublist').innerText = ''
+        onInit()
     })
 }
