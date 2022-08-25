@@ -56,24 +56,57 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
         // console.log("home")
         subItems()
     }
+
+    else if (url.href.includes("https://comic.naver.com/webtoon/list?titleId=")){
+        console.log("list page")
+        // 봤던 화수에 대해 색을 다르게 바꾸는 함수 생성
+        isWatched(titleId)
+    }
 })
 
 function addPreWatch (titleId, title, no){
-    chrome.storage.local.get(titleId, (item) => {
-        if (item) {
-            const watchedNumbers = item.preWatch || []
-            
-            if (!watchedNumbers.includes(no)) {
-                watchedNumbers.push(no)
-
-                chrome.storage.local.set({[titleId]:{"id":titleId, "title":title, "preWatch": watchedNumbers}})
-                // chrome.storage.local.get(titleId, (test) => {
-                //     console.log("preWatch 확인용",test)
-                // })
+    chrome.storage.local.get(titleId, (target) => {
+        Object.entries(target).forEach((item) => {
+            // console.log(item)
+            if (item[1]) {
+                const watchedNumbers = item[1].preWatch
+                // console.log(watchedNumbers)
+                if (!watchedNumbers.includes(no)) {
+                    watchedNumbers.push(no)
+    
+                    chrome.storage.local.set({[titleId]:{"id":titleId, "title":title, "preWatch": watchedNumbers}})
+                    // chrome.storage.local.get(titleId, (test) => {
+                    //     console.log("preWatch 확인용",test)
+                    // })
+                }
             }
-        } else {
-            chrome.storage.local.set({[titleId]:{"id":titleId, "title":title, "preWatch":[no]}})
-        }
+            else {
+                chrome.storage.local.set({[titleId]:{"id":titleId, "title":title, "preWatch":[no]}})
+            }
+        })
+
     })
 }
 
+function isWatched(id) {
+    chrome.storage.local.get(id, (target) => {
+        const pageNode = document.querySelectorAll('tr')
+        const pageList = Array.from(pageNode)
+        const contentLsit = pageList.slice(2)
+        console.log(contentLsit, target)
+
+        Object.entries(target).forEach((keys) => {
+            // console.log(keys[1].preWatch)
+            const compare1 = keys[1].preWatch
+            contentLsit.forEach((temp) => {
+                const aaa = temp.querySelector("td a")
+                const tempUrl = new URL(aaa.href)
+                const num = tempUrl.searchParams.get('no')
+                // console.log(tempUrl, num)
+                if (compare1.includes(num)) {
+                    pageNode.style.background="red"
+                }
+            })
+        })  
+    })
+}
