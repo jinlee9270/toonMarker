@@ -11,13 +11,19 @@ body {
 .item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
 }
 
 .title {
-    padding: 8px
+    width: 115px;
+    padding: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .subBtn {
-    margin: 8px
+    margin: 8px;
 }
 
