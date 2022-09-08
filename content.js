@@ -19,22 +19,6 @@ const subItems = () => {
     }
 }
 
-chrome.storage.local.get(null, (item) => {
-    let bodyText = document.querySelectorAll('li div a img')
-    let arr = Array.from(bodyText)
-    Object.entries(item).forEach((element) => {
-        if (element[1].preWatch.length === 0){
-            // console.log(element[1])
-            for(let i = 0;i < arr.length;i++){
-                let title = arr[i].alt
-                if (title === element[1].title){
-                    arr[i].style.filter = "grayscale(100%)"
-                }
-            }
-        }
-    })
-})
-
 chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
     // console.log("getURL");
     // console.log("content",response.frompopup)
@@ -46,7 +30,26 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
     const pathname = url.pathname
     // console.log("pathname",pathname)
     
-    if (titleId && no && pathname == "/webtoon/detail"){
+    // 메인 페이지 접속시에만 작동하게 설정
+    if (url === "https://comic.naver.com/webtoon/weekday") {
+        chrome.storage.local.get(null, (item) => {
+            let bodyText = document.querySelectorAll('li div a img')
+            let arr = Array.from(bodyText)
+            Object.entries(item).forEach((element) => {
+                if (element[1].preWatch.length === 0){
+                    // console.log(element[1])
+                    for(let i = 0;i < arr.length;i++){
+                        let title = arr[i].alt
+                        if (title === element[1].title){
+                            arr[i].style.filter = "grayscale(100%)"
+                        }
+                    }
+                }
+            })
+        })
+    }
+
+    if (titleId && no && pathname == "/webtoon/detail") {
         const title = document.querySelector('div.detail h2 span.title').innerText
         // console.log('title1',title)
         addPreWatch(titleId, title, no)
