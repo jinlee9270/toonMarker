@@ -5,6 +5,7 @@ function pageReload(){
 }
 
 function onInit () {
+    document.getElementById('sublist').innerText = ''
     const sidebar = document.getElementById('sublist')
     
     chrome.storage.local.get(null, (items) => {
@@ -42,7 +43,6 @@ function deleteSub(id, title){
         chrome.storage.local.set({[id]:{"id":id, "title":title, "preWatch":[]}})
     
         pageReload()
-        document.getElementById('sublist').innerText = ''
         onInit()
     })
 }
