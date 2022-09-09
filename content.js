@@ -33,6 +33,8 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
     // console.log("pathname",pathname)
 
     // 메인 페이지 접속시에만 작동하게 설정
+    // url parsing 에서 id 추출방법은 맞지 않아서 split 하는 방법으로 구현
+    // 변수 명 바꾸기  
     if (urlHref === "https://comic.naver.com/webtoon/weekday") {
         chrome.storage.local.get(null, (item) => {
             let bodyText = document.querySelectorAll('li div a img')
@@ -69,6 +71,8 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
     }
 })
 
+// addPreWatch 함수이름 변경할 것 isWatched과 비슷하게 일치시킬 것
+// target, item, watchedNumbers도 명확한 의미로 변경할 것
 function addPreWatch (titleId, title, no){
     chrome.storage.local.get(titleId, (target) => {
         Object.entries(target).forEach((item) => {
@@ -93,7 +97,8 @@ function addPreWatch (titleId, title, no){
     })
 }
 
-// function 이름 수정, target, pageNode, pageList, compare1, aaa 등 변수 이름 명확하게 변경할 것
+// function 이름 수정 is~~ 라는 이름은 boolen type 에 적합
+// target, pageNode, pageList, compare1, aaa 등 변수 이름 명확하게 변경할 것
 function isWatched(id) {
     chrome.storage.local.get(id, (target) => {
         const pageNode = document.querySelectorAll('tr')
