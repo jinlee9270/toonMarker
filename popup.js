@@ -6,6 +6,7 @@ function pageReload(){
 
 function onInit () {
     const sidebar = document.getElementById('sublist')
+    
     chrome.storage.local.get(null, (items) => {
         Object.entries(items).forEach((item) => {
             const itemBox = document.createElement('div')
