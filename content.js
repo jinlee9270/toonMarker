@@ -2,18 +2,17 @@ const makeItem = () => {
     let imgNode = document.querySelectorAll('li div a img')
     let imgList = Array.from(imgNode)
 
+    // url parsing 에서 id 추출방법은 맞지 않아서 split 하는 방법으로 구현
     for (let i = 0; i < imgList.length; i++){
         const title = imgList[i].alt
-        // console.log("imgList",title)
         const temp = imgList[i].currentSrc.split("/")
         let id = temp[5]
-        // console.log(id)
         
         if (id && id.length === 6){
             chrome.storage.local.get(id, (item) => {
                 if (JSON.stringify(item) === '{}') {
                     chrome.storage.local.set({[id]:{"id":id, "title":title, "preWatch":[]}})
-                    chrome.storage.local.get(id,(item)=>{console.log("now in",item)})
+                    // chrome.storage.local.get(id,(item)=>{console.log("now in",item)})
                 }
             })
         }
@@ -29,7 +28,6 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
     const pathname = url.pathname
 
     // 메인 페이지 접속시에만 작동하게 설정
-    // url parsing 에서 id 추출방법은 맞지 않아서 split 하는 방법으로 구현
     if (urlHref === "https://comic.naver.com/webtoon/weekday") {
         chrome.storage.local.get(null, (subObjs) => {
             let imgNodes = document.querySelectorAll('li div a img')
@@ -57,8 +55,6 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
     }
 
     else if (url.href.includes("https://comic.naver.com/webtoon/list?titleId=")) {
-        console.log("list page")
-        // 봤던 화수에 대해 색을 다르게 바꾸는 함수 호출
         coloringEpi(titleId)
     }
 })

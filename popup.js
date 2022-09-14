@@ -4,27 +4,25 @@ function pageReload(){
     })
 }
 
-function onInit () {
+function makeSubList () {
     document.getElementById('sublist').innerText = ''
     const sidebar = document.getElementById('sublist')
     
-    chrome.storage.local.get(null, (items) => {
-        Object.entries(items).forEach((item) => {
+    chrome.storage.local.get(null, (subItems) => {
+        Object.entries(subItems).forEach((subItem) => {
             const itemBox = document.createElement('div')
-            // console.log("item",item[1].title, item[1].preWatch)
 
-            if (item[1].preWatch.length > 0){
-                // console.log(item[1].title)
+            if (subItem[1].preWatch.length > 0){
                 itemBox.setAttribute('class', 'item')
 
                 const title = document.createElement('div')
                 title.setAttribute('class', 'title')
-                title.innerText = item[1].title
+                title.innerText = subItem[1].title
 
                 const subBtn = document.createElement('button')
                 subBtn.setAttribute('class', 'subBtn')
                 subBtn.innerText = "not subscribe"
-                subBtn.onclick = () => { deleteSub(item[1].id, item[1].title) }
+                subBtn.onclick = () => { deleteSub(subItem[1].id, subItem[1].title) }
 
                 itemBox.appendChild(title)
                 itemBox.appendChild(subBtn)
@@ -35,14 +33,13 @@ function onInit () {
     })
 }
 
-onInit()
+makeSubList()
 
 function deleteSub(id, title){
-    // console.log(id)
     chrome.storage.local.get(id, () => {
         chrome.storage.local.set({[id]:{"id":id, "title":title, "preWatch":[]}})
     
         pageReload()
-        onInit()
+        makeSubList()
     })
 }
