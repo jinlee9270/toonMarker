@@ -59,12 +59,10 @@ chrome.runtime.sendMessage({cmd: "getURL"}, (response) => {
     else if (url.href.includes("https://comic.naver.com/webtoon/list?titleId=")) {
         console.log("list page")
         // 봤던 화수에 대해 색을 다르게 바꾸는 함수 호출
-        isWatched(titleId)
+        coloringEpi(titleId)
     }
 })
 
-// addPreWatch 함수이름 변경할 것 isWatched과 비슷하게 일치시킬 것
-// target, item, watchedNumbers도 명확한 의미로 변경할 것
 function addPreEpi (titleId, title, episode){
     chrome.storage.local.get(titleId, (titleIdObjs) => {
         Object.entries(titleIdObjs).forEach((titleIdObj) => {
@@ -86,24 +84,19 @@ function addPreEpi (titleId, title, episode){
     })
 }
 
-// function 이름 수정 is~~ 라는 이름은 boolen type 에 적합
-// target, pageNode, pageList, compare1, aaa 등 변수 이름 명확하게 변경할 것
-function isWatched(id) {
+function coloringEpi(id) {
     chrome.storage.local.get(id, (target) => {
-        const pageNode = document.querySelectorAll('tr')
-        const pageList = Array.from(pageNode)
-        //slice 바꾸기 - 완결웹툰 같은 경우는 1개만 잘라야 하는 경우가 있음 url 추출로 변경할 것
-        const contentLsit = pageList.slice(2)
-        console.log(contentLsit, target)
-
-        Object.entries(target).forEach((keys) => {
-            const compare1 = keys[1].preWatch
-            contentLsit.forEach((temp) => {
-                const aaa = temp.querySelector("td a")
-                const tempUrl = new URL(aaa.href)
-                const num = tempUrl.searchParams.get('no')
-                if (compare1.includes(num)) {
-                    temp.style.background="#F1EFDC"
+        const epiNodes = document.querySelectorAll('tr')
+        const epiLists = Array.from(epiNodes)
+        Object.entries(target).forEach((titleId) => {
+            epiLists.forEach((episode) => {
+                const epiLink = episode.querySelector("td a")
+                if (epiLink) {
+                    const tempUrl = new URL(epiLink.href)
+                    const epiNum = tempUrl.searchParams.get('no')
+                    if (titleId[1].preWatch.includes(epiNum)) {
+                        episode.style.background="#F1EFDC"
+                    }
                 }
             })
         })  
